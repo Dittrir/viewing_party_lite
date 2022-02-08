@@ -6,6 +6,11 @@ This is the base repo for the [Viewing Party Lite project](https://backend.turin
 Viewing Part Lite is an application in which users can explore movie options and create a viewing party event for themselves and other users of the application.
 
 ## Learning Goals
+- Consume JSON APIs that require authentication
+- Test consumption of APIs (facade,service,poros)
+- Organize and refactor code to be more maintainable
+- Apply RuboCop’s style guide for code quality
+- Deploy to Heroku 
 
 ## Schema
 ![Screen Shot 2022-02-03 at 3 54 19 PM](https://user-images.githubusercontent.com/89048720/152448822-361a29dc-2459-44de-a3fb-e38003247311.png)
