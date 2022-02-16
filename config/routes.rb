@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :users
 
-  get '/register', to: 'welcome#register'
+  get '/register', to: 'users#new'
   post '/register', to: 'users#create'
   get '/users/:id/discover', to: 'users#discover'
 
