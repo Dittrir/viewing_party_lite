@@ -1,11 +1,18 @@
 <h1>Viewing Party Lite</h1>
 <h2>Create a New User</h2>
 
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <p><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved: </p>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
 <%= form_with url: "/register", method: :post, local:true do |form| %>
-<% if flash[:alert] %>
-  <div class="alert"><%= flash[:alert] %></div>
-<% end %>
-  <br>
   <%= form.label :name %>
   <p><%= form.text_field :name %></p>
 
