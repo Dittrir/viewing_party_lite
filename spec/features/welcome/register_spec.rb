@@ -17,22 +17,29 @@ RSpec.describe 'Welcome Register Page' do
     it 'has a form that is filled out and takes you to new user show page' do
       visit "/register"
 
-      fill_in('Name', with: 'Marco Polo')
-      fill_in('Email', with: "Marco_polo@gmail.com")
+      fill_in(:name, with: 'Marco')
+      fill_in(:email, with: "Marco@gmail.com")
+      fill_in(:password, with: "password12345")
+      fill_in(:password_confirmation, with: "password12345")
 
       click_button('Submit')
 
       last = User.all.last
       expect(current_path).to eq("/users/#{last.id}")
     end
-    it "render flash message" do
+
+    it "sad path: render flash message" do
       visit "/register"
 
       fill_in('Name', with: 'Marco Polo')
 
       click_button('Submit')
 
-      expect(page).to have_content("Error: Name can't be blank, Email can't be blank and must be valid.")
+      expect(page).to have_content("4 errors prohibited this post from being saved")
+      expect(page).to have_content("Email is invalid")
+      expect(page).to have_content("Email can't be blank")
+      expect(page).to have_content("Password digest can't be blank")
+      expect(page).to have_content("Password can't be blank")
 
       expect(current_path).to eq("/register")
     end

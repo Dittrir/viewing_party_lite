@@ -23,15 +23,17 @@ RSpec.describe 'Welcome Index Page' do
 
       fill_in :name, with: 'Wade'
       fill_in :email, with: 'Wade@email.com'
+      fill_in :password, with: 'password12345'
+      fill_in :password_confirmation, with: 'password12345'
       click_button 'Submit'
 
       expect(page).to have_content("Wade")
     end
 
     it 'lists the existing users which link to their dashboard' do
-      user_1 = User.create!(name: "David", email: "david@email.com")
-      user_2 = User.create!(name: "Wade", email: "wade@email.com")
-      user_3 = User.create!(name: "Robin", email: "robin@email.com")
+      user_1 = User.create!(name: "David", email: "david@email.com", password: 'password123', password_confirmation: 'password123')
+      user_2 = User.create!(name: "Wade", email: "wade@email.com", password: 'password123', password_confirmation: 'password123')
+      user_3 = User.create!(name: "Robin", email: "robin@email.com", password: 'password123', password_confirmation: 'password123')
 
       visit root_path
 
@@ -41,6 +43,53 @@ RSpec.describe 'Welcome Index Page' do
       end
 
       expect(current_path).to eq("/users/#{user_1.id}")
+    end
+
+    it 'has a link to allow users to login' do
+      user_1 = User.create!(name: "Robin", email: "robin@email.com", password: 'password12345', password_confirmation: 'password12345')
+
+      visit root_path
+
+      click_link 'Log In'
+      expect(current_path).to eq("/login")
+
+      fill_in :email, with: 'robin@email.com'
+      fill_in :password, with: 'password12345'
+      click_button 'Log In'
+
+      expect(current_path).to eq("/users/#{user_1.id}")
+    end
+
+    it 'sad path: gives error message if user does not exist' do
+      user_1 = User.create!(name: "Robin", email: "robin@email.com", password: 'password12345', password_confirmation: 'password12345')
+
+      visit root_path
+
+      click_link 'Log In'
+      expect(current_path).to eq("/login")
+
+      fill_in :email, with: 'r@email.com'
+      fill_in :password, with: 'password12345'
+      click_button 'Log In'
+
+      expect(current_path).to eq("/login")
+      expect(page).to have_content("User does not exist. Please try again.")
+    end
+
+    it 'sad path: gives error message if incorrect password' do
+      user_1 = User.create!(name: "Robin", email: "robin@email.com", password: 'password12345', password_confirmation: 'password12345')
+
+      visit root_path
+
+      click_link 'Log In'
+      expect(current_path).to eq("/login")
+
+      fill_in :email, with: 'robin@email.com'
+      fill_in :password, with: 'pdasdf'
+      click_button 'Log In'
+
+      expect(current_path).to eq("/login")
+      expect(page).to have_content("Email or password is incorrect. Please try again.")
     end
   end
 end

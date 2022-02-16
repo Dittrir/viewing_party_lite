@@ -1,0 +1,29 @@
+<h1>Viewing Party Lite</h1>
+<h2>Create a New User</h2>
+
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <p><%= pluralize(@user.errors.count, "error") %> prohibited this post from being saved: </p>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form_with url: "/register", method: :post, local:true do |form| %>
+  <%= form.label :name %>
+  <p><%= form.text_field :name %></p>
+
+  <%= form.label :email %>
+  <p><%= form.text_field :email %></p>
+
+  <%= form.label :password %>
+  <p><%= form.password_field :password %></p>
+
+  <%= form.label :password_confirmation %>
+  <p><%= form.text_field :password_confirmation %></p>
+
+  <%= form.submit "Submit" %>
+<% end %>

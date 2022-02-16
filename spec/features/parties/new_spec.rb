@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Party New Page' do
   describe 'view' do
     before(:each) do
-      @user_1 = User.create!(name: "David", email: "david@email.com")
+      @user_1 = User.create!(name: "David", email: "david@email.com", password: 'password123', password_confirmation: 'password123')
     end
 
     it 'includes all information about the viewing party', :vcr do
@@ -22,6 +22,7 @@ RSpec.describe 'Party New Page' do
       expect(page).to have_content(top_movie.title)
       expect(page).to have_content("Start Time: 2000-01-01 07:00:00")
     end
+
     it 'sad path: all fields blank', :vcr do
       top_movie = MovieFacade.top_movies.first
 
