@@ -1,4 +1,8 @@
+require 'bcrypt'
+
 class User < ApplicationRecord
+  include BCrypt
+
   has_many :user_parties
   has_many :parties, through: :user_parties
 
@@ -7,6 +11,10 @@ class User < ApplicationRecord
             :uniqueness => true
   validates :name,
             :presence => {message: "can't be blank"}
+  validates :password_digest,
+            :presence => true
+
+  has_secure_password
 
 
   def self.except_self(user)
