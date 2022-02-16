@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources :users
 
   get '/register', to: 'welcome#register'
-  post '/register', to: 'welcome#create'
+  post '/register', to: 'users#create'
   get '/users/:id/discover', to: 'users#discover'
 
   post '/users/:id/movies', to: 'user_movies#search'
