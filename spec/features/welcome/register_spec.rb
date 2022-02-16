@@ -28,14 +28,18 @@ RSpec.describe 'Welcome Register Page' do
       expect(current_path).to eq("/users/#{last.id}")
     end
 
-    it "render flash message" do
+    it "sad path: render flash message" do
       visit "/register"
 
       fill_in('Name', with: 'Marco Polo')
 
       click_button('Submit')
 
-      expect(page).to have_content("Error: Name can't be blank, Email can't be blank and must be valid.")
+      expect(page).to have_content("4 errors prohibited this post from being saved")
+      expect(page).to have_content("Email is invalid")
+      expect(page).to have_content("Email can't be blank")
+      expect(page).to have_content("Password digest can't be blank")
+      expect(page).to have_content("Password can't be blank")
 
       expect(current_path).to eq("/register")
     end

@@ -12,7 +12,7 @@ class User < ApplicationRecord
   validates :name,
             :presence => {message: "can't be blank"}
   validates :password_digest,
-            :presence => true
+            :presence => {message: "can't be blank"}
 
   has_secure_password
 

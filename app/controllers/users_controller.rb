@@ -8,15 +8,15 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.new(user_params)
   end
 
   def create
-    user = User.create(user_params)
-    if user.save
-      redirect_to user_path(user.id)
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to user_path(@user.id)
     else
-      flash[:alert] = "Error: Name can't be blank, Email can't be blank and must be valid."
-      redirect_to "/register"
+      render :new
     end
   end
 
